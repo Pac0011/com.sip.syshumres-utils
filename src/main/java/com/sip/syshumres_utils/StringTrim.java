@@ -11,11 +11,15 @@ import java.text.Normalizer;
 public class StringTrim {
 	
 	public static String trimAndRemoveDiacriticalMarks(String str) {
-	    //"ÀÂÃÄÅÆÇÈÊËÌÎÏÐÑÒÔÕÖØÙÛÜÝßàâãäåæçèêëìîïðñòôõöøùûüýÿ";
+	    //"ÀÂÃÄÅÆÇÈÊËÌÎÏÐÒÔÕÖØÙÛÜÝßàâãäåæçèêëìîïðòôõöøùûüýÿ";
 		if (str != null) {
 	        // Eliminar marcas diacríticas, excepto acentos y "ñ"
 			String newStr = Normalizer.normalize(str, Normalizer.Form.NFD)
-					.replaceAll("[^\\\\p{InCombiningDiacriticalMarks}&&[^\\\\u0301\\\\u0300]]", "");
+					.replaceAll("[\\p{InCombiningDiacriticalMarks}&&[^\\u0301\\u0303]]", "");
+			//.replaceAll("[^\\p{ASCII}]", "")
+			//.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+			//String newStr = Normalizer.normalize(str, Normalizer.Form.NFD)
+			//		.replaceAll("[^\\p{ASCII}(ñ)(áéíóúÁÉÍÓÚ)]", "");
 			return newStr.strip();
 		}
 		return str;
