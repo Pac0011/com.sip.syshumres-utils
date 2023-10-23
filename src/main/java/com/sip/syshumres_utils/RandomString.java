@@ -8,7 +8,12 @@ import java.util.Random;
  * @author Prong
  * @version 2.0
  */
-public class RandomString {
+public final class RandomString {
+	
+	private static final Random RANDOM = new Random();// NOSONAR
+	
+	private RandomString() {
+	}
 	
 	public static String getRandomString(int i) {
 		//EL java.util.UUID; no se recomienda porque puede repetir las cadenas
@@ -19,10 +24,10 @@ public class RandomString {
         builder = new StringBuilder(i); 
 
         for (int m = 0; m < i; m++) {
-            // generate numeric
+        	// generate numeric        	
             int myindex 
                 = (int)(alphaNumericS.length() 
-                        * Math.random());
+                        * Math.random());// NOSONAR
             // add the characters
             builder.append(alphaNumericS 
                         .charAt(myindex)); 
@@ -42,7 +47,7 @@ public class RandomString {
             // generate numeric
             int myindex 
                 = (int)(numericS.length() 
-                        * Math.random());
+                        * Math.random());// NOSONAR
             builder.append(numericS 
                         .charAt(myindex)); 
         }
@@ -50,14 +55,12 @@ public class RandomString {
     }
 	
 	public static String getRandomStringStream(int i) {
-		Random rand = new Random();
 		//Only ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 characters
-	    String str = rand.ints(48, 123)
+	    return RANDOM.ints(48, 123)
 	           .filter(num -> (num<58 || num>64) && (num<91 || num>96))
 	           .limit(i)
 	           .mapToObj(c -> (char)c).collect(StringBuffer::new, StringBuffer::append, StringBuffer::append)
 	          .toString();
-	    return str;
 	}
 
 }
