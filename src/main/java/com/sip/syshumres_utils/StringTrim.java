@@ -22,5 +22,15 @@ public final class StringTrim {
 		}
 		return str;
 	}
+	
+	public static String trimAndRemoveDiacriticalMarksPassword(String str) {
+		if (str != null) {
+	        // Eliminar marcas diacríticas
+			String newStr = Normalizer.normalize(str, Normalizer.Form.NFD)
+					.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+			return newStr.strip();
+		}
+		return str;
+	}
 
 }
