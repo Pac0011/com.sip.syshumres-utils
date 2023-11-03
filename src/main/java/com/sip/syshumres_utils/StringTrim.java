@@ -1,5 +1,7 @@
 package com.sip.syshumres_utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.Normalizer;
 
 /**
@@ -29,6 +31,19 @@ public final class StringTrim {
 			String newStr = Normalizer.normalize(str, Normalizer.Form.NFD)
 					.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
 			return newStr.strip();
+		}
+		return str;
+	}
+	
+	public static String urlDecodingAndTrim(String str) {
+		if (str != null) {
+			try {
+				String strDecode = URLDecoder.decode(str, "UTF-8");
+				//System.out.println("Text Decode: " + strDecode.strip());
+				return strDecode.strip();
+			} catch (UnsupportedEncodingException e) {
+				return str.strip();
+			}
 		}
 		return str;
 	}
